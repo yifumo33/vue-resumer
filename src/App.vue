@@ -6,6 +6,8 @@
     <preview v-bind:resume='resume'  class="preview"/>
     </main>
     <el-button id="preview-exit" v-on:click="haha">退出预览</el-button>
+    <el-button id="preview-save" v-on:click="hehe">截图</el-button>
+
   </div>
 </template>
 
@@ -61,6 +63,9 @@ export default {
     },
     haha:function(){
       this.previewMode = false
+    },
+    hehe:function(){
+      console.log('wawa')
     }
   },
   create(){
@@ -120,9 +125,16 @@ main .preview{
 }
 .previewMode>#Editor,
 .previewMode>#topbar,
-#preview-exit
+#preview-exit,
+#preview-save
 {
   display: none;
+}
+.previewMode>#preview-save{
+  display: inline-block;
+  position:fixed;
+  bottom:50px;
+  right: 10px;
 }
 .previewMode>#preview-exit{
   display: inline-block;
