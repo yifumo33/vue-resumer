@@ -1,4 +1,5 @@
 <template>
+
 	<div id="Editor">
 		<nav>
 			<ol>
@@ -20,37 +21,25 @@
 	<div class="panels">
 		<ol>
 			<li v-bind:class="{active:currentTab === 0}">
-				<imformation v-bind:profile="profile" />
+				<imformation v-bind:profile="resume.profile" />
 			</li>
 			<li v-bind:class="{active:currentTab === 1}">
-				<h2>工作经历</h2>
-				<el-form>
-					<div class="container" v-for="(work,index) in workHistory">
-					<el-form-item label="公司">
-					    <el-input v-model="work.company"></el-input>
-					  </el-form-item>
-					  <el-form-item label="工作内容">
-					    <el-input v-model="work.content"></el-input>
-					  </el-form-item>
-					  <i class="el-icon-error" v-on:click="removeWorkHistory(index)"></i>
-					  <hr>
-					</div>
-		
-						<el-button v-on:click="addWorkHistory">添加 </el-button>	
-
-				</el-form>
+				<project v-bind:items="resume.workHistory"  v-bind:labels="{company:'公司',content:'工作内容'}" v-bind:title="{content:'工作经历'}"/>
+				
 			</li>
 			<li v-bind:class="{active:currentTab === 2}">
-				<h2>学习经历</h2>
+				<project v-bind:items="resume.studyHistory" v-bind:labels="{school:'学校',duration:'时间',degree:'学位'}" v-bind:title="{content:'学习经历'}" />
 			</li>
 			<li v-bind:class="{active:currentTab === 3}">
-				<h2>项目经验</h2>
+				<project v-bind:items="resume.project" v-bind:labels="{project:'项目',duration:'时间'}" v-bind:title="{content:'项目经历'}" />
+				
 			</li>
 			<li v-bind:class="{active:currentTab === 4}">
-				<h2>获奖情况</h2>
+				<project v-bind:items="resume.reword" v-bind:labels="{aword:'奖项',time:'时间'}" v-bind:title="{content:'获奖情况'}" />
 			</li>
 			<li v-bind:class="{active:currentTab === 5}">
-				<h2>联系方式</h2>
+				<project class="xxx" v-bind:items="resume.contact" v-bind:labels="{phone:'电话',email:'邮件',QQ:'QQ',Wechat:'Wechat'}" v-bind:title="{content:'联系信息'}" />
+				
 			</li>
 
 		</ol>
@@ -63,36 +52,48 @@
 
 
 <script>
+	import workHistory from './workHistory'
 	import imformation from './imformation'
+	import studyHistory from './studyHistory'
+	import project from './project'
 	export default{
+		props:[
+ 			'resume'
+ 		],
 		components:{
-			imformation
+			imformation,
+			workHistory,
+			studyHistory,
+			project
 		},
 		data(){
 		 return{
 		 	currentTab:0,
 		 	icons:['credentials_icon','xinfeng','shu','xin','trophy_icon','dianhua'],
-		 	profile:{
-		 		name:'',
-		 		age:'',
-		 		city:''
-		 	},
-		 	workHistory:[
-		 		{company:'',content:''},
-		 	]
+		 	// profile:{
+		 	// 	name:'',
+		 	// 	age:'',
+		 	// 	city:''
+		 	// },
+		 	// workHistory:[
+		 	// 	{company:'',content:''},
+		 	// ],
+		 	// studyHistory:[
+		 	// 	{school:'',duration:'',degree:''}
+		 	// ],
+		 	// project:[
+		 	// 	{duration:'',project:''}
+		 	// ],
+		 	// reword:[
+		 	// 	{time:'',aword:''}
+		 	// ],
+		 	// contact:[
+		 	// 	{phone:'',email:'',QQ:'',Wechat:''}
+		 	// ]
+
 		 }
 		},
 		methods:{
-			addWorkHistory:function(){
-				this.workHistory.push({
-					company:'',content:''
-				})
-			},
-			removeWorkHistory:function(index){
-				this.workHistory.splice(index,1)
-			}
-		},
-		created(){
 			
 		}
 	}
@@ -171,6 +172,11 @@
 		top:5px;
 		right:5px;
 	}
+	.xxx .el-icon-error,
+	.xxx .haha,
+	.xxx hr{
+		display: none;
+	}
 </style>
 
 
@@ -179,47 +185,6 @@
 
 
 
-<!-- 
-				</li>
 
-				<li v-bind:class="{active:currentTab === 1}" v-on:click="currentTab = 1" >
-					<svg class="icon" aria-hidden="true">
-    <use xlink:href="#icon-xinfeng"></use>
-</svg>
-
-
-				</li>
-
-				<li v-bind:class="{active:currentTab === 2}" v-on:click="currentTab = 2" >
-					<svg class="icon" aria-hidden="true">
-    <use xlink:href="#icon-shu"></use>
-</svg>
-
-
-				</li>
-
-				<li v-bind:class="{active:currentTab === 3}" v-on:click="currentTab = 3" >
-					<svg class="icon" aria-hidden="true">
-    <use xlink:href="#icon-xin"></use>
-</svg>
-
-
-				</li>
-
-				<li v-bind:class="{active:currentTab === 4}" v-on:click="currentTab = 4">
-					<svg class="icon" aria-hidden="true">
-    <use xlink:href="#icon-trophy_icon"></use>
-</svg>
-
-
-				</li>
-
-				<li v-bind:class="{active:currentTab === 5}" v-on:click="currentTab = 5">
-					<svg class="icon" aria-hidden="true">
-    <use xlink:href="#icon-dianhua"></use>
-</svg>
-
-
-				</li> -->
 
 
