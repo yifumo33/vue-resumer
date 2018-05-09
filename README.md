@@ -49,3 +49,12 @@ import hello from './hello'
     hello
   },
 ```
+### vue的绑定问题
+常量用'',变量直接写,用:绑定别用v-model。
+```
+:label="(index+1) + '班'" 
+```
+这里遍历时，不能用key，只能用数组元素去表达
+```
+<el-input v-model = "item.content[index]"></el-input>
+```
