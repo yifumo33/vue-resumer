@@ -1,6 +1,7 @@
 <template>
 
 	<div id="Editor">
+
 		<nav>
 			<ol>
 		
@@ -9,10 +10,10 @@
 					v-on:click = "currentTab = i"
 				>
 					<svg class="icon" >
-    <use v-bind:xlink:href="`#icon-${icons[i]}`"></use>
-</svg>
+					    <use v-bind:xlink:href="`#icon-${icons[i]}`"></use>
+					</svg>
 
-   </li>
+  			 	</li>
 
 
 			</ol>
@@ -24,8 +25,8 @@
 				<imformation v-bind:profile="resume.profile" />
 			</li>
 			<li v-bind:class="{active:currentTab === 1}">
-				<project v-bind:items="resume.workHistory"  v-bind:labels="{company:'公司',content:'工作内容'}" v-bind:title="{content:'工作经历'}"/>
-				
+				<project v-bind:items="resume.workHistory"  v-bind:labels="{company:'公司',content:'工作内容',position:'职位',time:'时间'}" v-bind:title="{content:'工作经历'}"/>
+		
 			</li>
 			<li v-bind:class="{active:currentTab === 2}">
 				<project v-bind:items="resume.studyHistory" v-bind:labels="{school:'学校',duration:'时间',degree:'学位'}" v-bind:title="{content:'学习经历'}" />
@@ -39,10 +40,10 @@
 			</li>
 			<li v-bind:class="{active:currentTab === 5}">
 				<project class="xxx" v-bind:items="resume.contact" v-bind:labels="{phone:'电话',email:'邮件',QQ:'QQ',Wechat:'Wechat'}" v-bind:title="{content:'联系信息'}" />
-				
 			</li>
 
 		</ol>
+
 	</div>
 
 
@@ -56,6 +57,7 @@
 	import imformation from './imformation'
 	import studyHistory from './studyHistory'
 	import project from './project'
+	import hello from '../hello'
 	export default{
 		props:[
  			'resume'
@@ -64,7 +66,8 @@
 			imformation,
 			workHistory,
 			studyHistory,
-			project
+			project,
+			hello
 		},
 		data(){
 		 return{
@@ -114,7 +117,7 @@
 		justify-content:space-between;
 	}
 
-	  .icon {
+	.icon {
        width: 1em; height: 1em;
        vertical-align: -0.15em;
        fill: currentColor;
@@ -176,6 +179,12 @@
 	.xxx .haha,
 	.xxx hr{
 		display: none;
+	}
+	ol{
+		width:100%; 
+	}
+	li{
+		width:50%; 
 	}
 </style>
 
