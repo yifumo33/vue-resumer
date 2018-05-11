@@ -25,7 +25,7 @@
 				<imformation v-bind:profile="resume.profile" />
 			</li>
 			<li v-bind:class="{active:currentTab === 1}">
-				<project v-bind:items="resume.workHistory"  v-bind:labels="{company:'公司',content:'工作内容',position:'职位',time:'时间'}" v-bind:title="{content:'工作经历'}"/>
+				<workproject v-bind:items="resume.workHistory"  v-bind:labels="{company:'公司',content:'工作内容',position:'职位',time:'时间'}" v-bind:title="{content:'工作经历'}"/>
 		
 			</li>
 			<li v-bind:class="{active:currentTab === 2}">
@@ -58,6 +58,10 @@
 	import studyHistory from './studyHistory'
 	import project from './project'
 	import hello from '../hello'
+    import workproject from './workproject'
+
+
+
 	export default{
 		props:[
  			'resume'
@@ -67,7 +71,8 @@
 			workHistory,
 			studyHistory,
 			project,
-			hello
+			hello,
+			workproject
 		},
 		data(){
 		 return{
@@ -184,7 +189,7 @@
 		width:100%; 
 	}
 	li{
-		width:50%; 
+		width:100%; 
 	}
 </style>
 

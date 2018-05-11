@@ -4,7 +4,6 @@
 	<section class="imformation">
 		<img :src="resume.profile.src">
 		
-		
 		   <div class="data">
 			
 		<h1>{{resume.profile.name || '请填写名字'}}</h1>
@@ -37,7 +36,11 @@
 					<p>{{key.position || '请填工作职位'}}</p>
 				</div>
 											
-				<h3>{{key.content || '请填工作内容'}}</h3>
+				 <h3   v-for="(item,index) in key.content ">
+				 	<ol id="xxx">
+				 		<li>{{item}}</li>
+				 	</ol>
+				 </h3>
 			</li>
 		</ol>
 		
@@ -77,10 +80,13 @@
 </template>
 
 <style>
+	#xxx li{
+		list-style:disc;
+	}
 	#preview{
 		border:1px solid;
 		min-height: 100px;
-		padding:10px 20px; 
+		padding:20px 40px; 
 
 	}
 	.imformation{
@@ -137,7 +143,7 @@
     }
     .li-block h3{
     	padding-left:18px; 
-    	
+
     }
 
     

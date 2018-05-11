@@ -1,6 +1,6 @@
 <template>
   <div id="app" v-bind:class="{previewMode:previewMode}">
-    <Topbar class='topbar' v-on:preview="preview"/>
+    <Topbar class='topbar'  v-bind:resume="resume"  v-on:preview="preview" v-on:setFather="setFather"/>
     <main v-bind:class="{previewMode:previewMode}">
     <Editor  v-bind:resume="resume" class="editor"/>
     <preview v-bind:resume='resume'  class="preview"/>
@@ -28,7 +28,6 @@ import html2Canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import hello from './hello'
 
-
 import test from './test.js'
 var jspdf = require('jspdf')
 
@@ -37,7 +36,9 @@ export default {
     return{
           previewMode:false,
           resume:{
+
                     profile:{
+                    id:'',
                     name:'',
                     age:'',
                     city:'',
@@ -46,7 +47,7 @@ export default {
                     src:'https://i.loli.net/2018/05/09/5af270fc34c4f.jpg'
                   },
                   workHistory:[
-                    {company:'',time:'',position:'',content:''},
+                    {company:'',time:'',position:'',content:['']},
                   ],
                   studyHistory:[
                     {school:'',duration:'',degree:''}
@@ -70,11 +71,16 @@ export default {
     Topbar,
     Editor,
     Preview,
-    hello
+    hello,
+    workproject
   },
   methods:{
     preview:function(){
       this.previewMode =  true
+    },
+    setFather:function(resume,id){
+      this.resume = resume
+      this.resume.profile.id = id
     },
     haha:function(){
       this.previewMode = false
@@ -82,12 +88,22 @@ export default {
     hehe:function(){
       console.log('hehe')
       html2Canvas(document.querySelector("#preview")).then(canvas => {
-      var data = canvas.toDataURL('image/png')
-      var doc = new jsPDF()
-    
-
-      doc.addImage(data, 'PNG', 0, 0, 0,0);
-      doc.save('a4.pdf');
+        let imgData = canvas.toDataURL("image/JPEG");
+        let imgWidth = 210;
+        let pageHeight = 295;
+        let imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        let doc = new jsPDF("p", "mm");
+        let position = 0;
+        doc.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        doc.save("Resume.pdf");
       // doc.text('your Mather fucker', 10, 10)
       // doc.save('a4.pdf')
       // var newWindow = window.open('about:blank','image from canvas')
@@ -97,11 +113,24 @@ export default {
     }
   },
   created:function(){
-  var width = $('#preview').width()
-      var height = $('#preview').height()
-      console.log(width)
-      console.log(height)
-    
+    var APP_ID = '4tadOSGF8oNfIl3mKkCIyxA4-gzGzoHsz';
+    var APP_KEY = 'Mp2w9KVXWffYHIvLE6lJfpYz';
+
+      AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+      });
+
+
+
+  
+     var TestObject = AV.Object.extend('RegisterName');
+      var testObject = new TestObject();
+      testObject.save({
+        words: 'Hello World!'
+      }).then(function(object) {
+        alert('LeanCloud Rocks!');
+      }) 
   }
 }
 </script>
@@ -129,7 +158,8 @@ html,body,#app{
     }
 
 .topbar{
- box-shadow:0 0 3px hsla(0,0,0,0.5) 
+
+ box-shadow:0 0 1px 2px rgba(0,0,0,.1)
 }
 main{
   display: flex;
@@ -140,7 +170,7 @@ main .editor{
   margin:16px 8px 16px 16px; 
   width: 30em;
   background:white; 
-  box-shadow:0 0 3px hsla(0,0,0,0.5); 
+  box-shadow:0 0 1px 2px rgba(0,0,0,.1); 
    border-radius:4px;
    overflow:hidden;
 }
@@ -148,7 +178,7 @@ main .preview{
   flex: 1;
   margin:16px 16px 16px 8px; 
   background: white;
-   box-shadow:0 0 3px hsla(0,0,0,0.5); 
+   box-shadow:0 0 1px 2px rgba(0,0,0,.1); 
    border-radius:4px;
    overflow: scroll;
 
