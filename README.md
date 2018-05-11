@@ -58,3 +58,18 @@ import hello from './hello'
 ```
 <el-input v-model = "item.content[index]"></el-input>
 ```
+### $emit
+父子组件使用$emit和v-on时，子组件使用$emit触发，父组件在实例中v-on自定义事件监听。
+注意：父组件监听子组件触发的事件，不能用$on侦听子组件抛出的事件，而必须在模板里直接用v-on绑定。
+子组件中可以这么写
+```
+methods:{
+			preview(){
+				this.$emit('preview')
+			}
+		}
+```
+父组件中通过v-on去绑定
+```
+<Topbar class='topbar' v-on:preview="preview"/>
+```
