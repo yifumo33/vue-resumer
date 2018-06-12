@@ -132,7 +132,6 @@ export default {
       testObject.save({
         words: 'Hello World!'
       }).then(function(object) {
-        alert('LeanCloud Rocks!');
       }) 
   }
 }
