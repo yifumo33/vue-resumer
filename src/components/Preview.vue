@@ -1,6 +1,5 @@
 <template>
 	<div id="preview">
-		<!-- {{resume}} -->
 	<section class="imformation">
 		<img :src="resume.profile.src">
 		
@@ -24,66 +23,83 @@
 	</section>
 	
 	<section>
-				
-		<div class="title"><svg class="icon" aria-hidden="true">
-    		<use xlink:href="#icon-gongzuojingyan"></use>
-		</svg><h1>工作经历</h1></div>
+		<div   v-if="filter(resume.workHistory).length > 0" class="title"  ><svg class="icon" aria-hidden="true">
+		    		<use xlink:href="#icon-gongzuojingyan"></use>
+				</svg><h1>工作经历</h1></div>					
+		
 		<ol>
-			<li v-for=" (key,index ) in filter(resume.workHistory)" class="li-block">
-				<h2><span>{{index+1}}</span>.{{key.company || '请填写工作单位'}}</h2>
+			<li v-for=" (key,index ) in filter(resume.workHistory)" class="li-block" >
+				<h2>{{key.company || '请填写工作单位'}}</h2>
 				<div class="data-list">
-					<p>{{key.time || '请填工作时间'}}</p>
+					<p @click="inFO(key.time1)">{{inFO(key.time1)|| '请填工作时间'}} <span v-if="inFO(key.time1)">至</span>   <span v-if="inFO(key.time1)">{{inFO(key.time2) || '请填工作时间'}}</span>   </p>
 					<p>{{key.position || '请填工作职位'}}</p>
 				</div>
 											
 				 <h3   v-for="(item,index) in key.content ">
 				 	<ol id="xxx">
-				 		<li>{{item}}</li>
+				 			<li>{{item}}</li>
 				 	</ol>
 				 </h3>
 			</li>
 		</ol>
 		
-		<div class="title"><svg class="icon" aria-hidden="true">
+		<div class="title" v-if="filter(resume.studyHistory).length > 0"><svg class="icon" aria-hidden="true">
     		<use xlink:href="#icon-shu"></use>
 		</svg><h1>学习经历</h1></div>
 		<ol>
 			<li v-for=" key in filter(resume.studyHistory)" class="li-block">
-				<h3>{{key.school || '请填写学校名称'}}</h3>
-				<p>{{key.duration || '请填写学习时间'}}</p>
+				<h2>{{key.school || '请填写学校名称'}}</h2>
+			<div class="data-list">
+				<p @click="inFO(key.duration1)">{{inFO(key.duration1)|| '请填入学时间'}} <span v-if="inFO(key.duration1)">至</span>   <span v-if="inFO(key.duration1)">{{inFO(key.duration2) || '请填毕业时间'}}</span>   </p>
 				<p>{{key.degree || '请填写获得学位'}}</p>	
+			</div>
 			</li>
 		</ol>
 		
-		<div class="title"><svg class="icon" aria-hidden="true">
+		<div v-if="filter(resume.project).length > 0" class="title"><svg class="icon" aria-hidden="true">
     		<use xlink:href="#icon-xiangmu1"></use>
 		</svg><h1>项目经历</h1></div>
 		<ol>
+			
 			<li v-for=" key in filter(resume.project)" class="li-block">
-				<h3>{{key.duration || '请填写项目经历'}}</h3>
-				<p>{{key.project || '请填写项目名称'}}</p>	
+		   <h2>{{key.project || '请填写项目名称'}}</h2>
+			<div class="data-list">
+				<p>{{key.duration || '请填写项目时间'}}</p>
+				<p>{{key.content || '请填写项目内容'}}</p>	
+
+			</div>
 			</li>
 		</ol>
 		
-		<div class="title"><svg class="icon" aria-hidden="true" >
+		<div v-if="filter(resume.reword).length > 0" class="title"><svg class="icon" aria-hidden="true" >
     		<use xlink:href="#icon-trophy_icon"></use>
 		</svg><h1>获奖经历</h1></div>
 		<ol>
 			<li v-for=" key in filter(resume.reword)" class="li-block">
-				<h3>{{key.time || '请填写获奖时间'}}</h3>
-				<p>{{key.aword || '请填写获奖名称'}}</p>	
+				<!-- <h3>{{key.time || '请填写获奖时间'}}</h3>
+				<p>{{key.aword || '请填写获奖名称'}}</p>	 -->
+
+				 <h2>{{key.aword || '请填写获奖名称'}}</h2>
+			<div class="data-list">
+				<p>{{key.time || '请填写获奖时间'}}</p>
+			</div>
 			</li>
 		</ol>
+
+	
 		
 	</section>
 	</div>
 </template>
 
 <style>
-	#xxx li{
-		list-style:disc;
+	ul,ol{
+		list-style: none;
 	}
+	
 	#preview{
+    	color:#666666;
+
 		border:1px solid;
 		min-height: 100px;
 		padding:20px 40px; 
@@ -122,14 +138,16 @@
     	display:block;
     	width:50px;
     	height:50px; 
-    	fill:#dddddd;
-    	background:black;
+    	fill:white;
+    	background:#2a97ff;
     	padding:10px;  
     	position:relative;
     	border-radius:50%;   
     }
 
     .title h1{
+    	color:#666666;
+
     	margin-left:10px;
     	width:100%; 
     	line-height:32px;
@@ -137,13 +155,20 @@
     }
     .li-block .data-list{
     	padding-left:18px; 
-		width:300px; 
+    	font-size:20px; 
     	display:flex;
     	justify-content:space-between;
+    }
+
+    .li-block .data-list p{
+		margin:15px 5px;
     }
     .li-block h3{
     	padding-left:18px; 
 
+    }
+    p{
+    	color:#666666;
     }
 
     
@@ -151,9 +176,13 @@
 
 <script>
 	export default{
+
 		props:[
 			'resume'
 		],
+		computed:{
+			
+		},
 		methods:{
 			filter:function(array){
 				return array.filter(item => !this.isEmpty(item))
@@ -168,6 +197,24 @@
 					
 				}
 				return empty
+			},
+			notEmpty:function(obj){
+				var noempty = false
+				for( var key in obj){
+					if(obj[key]){
+						noempty = true
+						break
+					}
+					
+				}
+				return noempty
+			},
+			inFO(obj){
+				var str = obj + ''
+				return(str.substring(0,str.length - 24).substring(4))
+			},
+			haha(index){
+				return index === 0
 			}
 		}
 	}	

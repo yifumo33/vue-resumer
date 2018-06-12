@@ -4,7 +4,7 @@
 		<h2>{{title[content]}}</h2>
 		<el-form>
 			<div class="container" v-for="(item,index) in items">
-			<el-form-item  v-for="key in keys" v-bind:label="labels[key] || key">
+			<el-form-item :key="key.name" v-for="key in keys" v-bind:label="labels[key] || key">
 			    <el-input v-model="item[key]"></el-input>
 			  </el-form-item>
 			  <i class="el-icon-error" v-on:click="removeitemHistory(index)"></i>

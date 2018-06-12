@@ -8,7 +8,8 @@
     <el-button id="preview-exit" v-on:click="haha">退出预览</el-button>
     <el-button id="preview-save" v-on:click="hehe">截图</el-button>
    <a href="" id="download"></a>
-
+    
+  
   </div>
 </template>
 
@@ -27,8 +28,10 @@ import workproject from './components/workproject'
 import html2Canvas from 'html2canvas'  
 import jsPDF from 'jspdf'
 import hello from './hello'
+import test from './test'
 
-import test from './test.js'
+
+
 var jspdf = require('jspdf')
 
 export default {
@@ -44,16 +47,16 @@ export default {
                     city:'',
                     phone:'',
                     mail:'',
-                    src:'https://i.loli.net/2018/05/09/5af270fc34c4f.jpg'
+                    src:'https://i.loli.net/2018/06/12/5b1f3db9ccac6.jpg'
                   },
                   workHistory:[
-                    {company:'',time:'',position:'',content:['']},
+                    {company:'',time1:'',time2:'',position:'',content:['']},
                   ],
                   studyHistory:[
-                    {school:'',duration:'',degree:''}
+                    {school:'',duration1:'',duration2:'',degree:''}
                   ],
                   project:[
-                    {duration:'',project:''}
+                    {duration:'',project:'',content:''}
                   ],
                   reword:[
                     {time:'',aword:''}
@@ -209,4 +212,7 @@ main .preview{
    overflow: scroll;
 
 }
+
+  .demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
+
 </style>

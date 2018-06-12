@@ -3,7 +3,6 @@
 		<div class="logo">
 			VueResumer
 			<h1 id="clientName"></h1>
-			<!-- {{resume}} -->
 		</div>
 		<div class="actions">
 			<el-button type="primary" v-on:click="register">注册</el-button>
@@ -33,10 +32,20 @@
 		  <el-button v-on:click="preview">预览</el-button>
 			
 		</div>
+
 	</div>
 </template>
 
 <style>
+.logo{
+
+	font-family: Arial;
+	font-size:35px;
+	display: flex;
+	align-items: center;
+	line-height:35px;
+	color: #2a97ff;
+}
 #topbar{
 	display: flex;
 	justify-content:space-between;
@@ -55,15 +64,28 @@
     display:inline-block;
 }
 
+  .demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
 
 </style>
 
 <script>
+	import laydate from './laydate.js'
+	import test from './test.js'
+
+
 	export default{
+
+
+
+
+
+
+
 		data(){
 			return{
 				seen1:false,
-				seen2:false
+				seen2:false,
+
 			}
 			
 		},
@@ -149,16 +171,17 @@
 			loginOut(){
 
 
-console.log(1231243213)
+				console.log(1231243213)
 
 
-					// var _this = this
-				 //    var id = this.resume.profile.id
-
-		
 
 
-				 //    var todo = AV.Object.createWithoutData('RegisterName', id);
+
+				    //  var todo = AV.Object.createWithoutData('RegisterName', id);
+						  // // 修改属性
+						  // todo.set('RegisterName', 'YIFU');
+						  // // 保存到云端
+						  // todo.save();
 				 //    console.log(_this.resume)
 
 				 //    todo.set("resume", _this.resume, {
@@ -175,7 +198,11 @@ console.log(1231243213)
 					//   // The save failed.  Error is an instance of AVError.
 					// });
 			}
-		}
+		},
+	 created:function(){
+	 	console.log('我是topbar')
+	 }
+	 	
 
 	}
 </script>
